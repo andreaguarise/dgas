@@ -1,0 +1,17 @@
+ldconfig
+export DGAS_LOCATION=${DGAS_LOCATION:-/usr}
+
+if [ -h /etc/rc.d/init.d/dgas-hlrd ] ; then
+	rm -f /etc/rc.d/init.d/dgas-hlrd
+fi 
+if [ -h /etc/rc.d/init.d/glite-dgas-hlrd ] ; then
+	rm -f /etc/rc.d/init.d/glite-dgas-hlrd
+fi 
+ln -s $DGAS_LOCATION/sbin/dgas-hlrd /etc/rc.d/init.d/dgas-hlrd
+chkconfig --add dgas-hlrd
+
+if [ -f /opt/glite/etc/dgas_hlr.conf ] ; then
+	if [ ! -f /etc/dgas/dgas_hlr.conf ] ; then
+		mv /opt/glite/etc/dgas_hlr.conf /etc/dgas/
+	fi 
+fi
