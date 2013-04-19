@@ -1,0 +1,13 @@
+/Makefile.am/1.1.2.13.2.4/Tue Aug 21 09:44:34 2012//Tdgas_branch_4_2_0
+/amqProducerExe.cpp/1.1.2.15.2.2/Mon Aug 20 12:29:16 2012//Tdgas_branch_4_2_0
+/dgas-emicarComposer/1.1.2.2/Mon Jan  2 10:38:50 2012//Tdgas_branch_4_2_0
+/dgas-ogfurComposer/1.1.2.2/Tue May  3 09:13:55 2011//Tdgas_branch_4_2_0
+/dgas-record-filter.pl/1.1.2.3/Mon Jul  4 11:53:35 2011//Tdgas_branch_4_2_0
+/dgas-sqlInsertComposer.pl/1.1.2.4/Thu Jun 14 07:35:46 2012//Tdgas_branch_4_2_0
+/dgas-stompProducer.pl/1.1.4.2/Fri Jun  8 14:10:43 2012//Tdgas_branch_4_2_0
+/legacyComposer.cpp/1.1.2.3/Tue Jan  4 10:22:12 2011//Tdgas_branch_4_2_0
+/legacyComposerExe.cpp/1.1.2.4/Fri Mar  4 14:55:16 2011//Tdgas_branch_4_2_0
+/legacyProducer.cpp/1.1.2.10/Tue Mar 15 13:30:36 2011//Tdgas_branch_4_2_0
+/legacyProducerExe.cpp/1.1.2.4/Mon Jan 17 08:05:25 2011//Tdgas_branch_4_2_0
+/legacyStorageComposerExe.cpp/1.1.2.3/Tue Nov  8 14:14:14 2011//Tdgas_branch_4_2_0
+D
