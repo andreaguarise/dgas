@@ -1,8 +1,0 @@
-#! /bin/bash
-
-echo "Status of trans_queue:"
-echo
-
-${GLITE_LOCATION}/sbin/glite-dgas-hlr-checkqueue -s
-
-
