@@ -1,0 +1,22 @@
+/.#hlrArchiveOldRecords.cpp.1.1.2.6/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/.hlrTranslateDb.cpp.swo/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/.hlrTranslateDb.cpp.swp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/Makefile.am/1.1.2.1.2.10/Tue Sep 25 13:07:16 2012//Tglite-dgas_branch_3_4_0
+/dgas-hlr-runSSM.sh/1.1.2.1/Tue Sep 25 13:07:16 2012//Tglite-dgas_branch_3_4_0
+/dgas-sumrecords2gocSSMAggregate.pl/1.1.4.10/Mon Nov  5 13:57:39 2012//Tglite-dgas_branch_3_4_0
+/glite-dgas-hlr-bdiiresimport.pl/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/glite-dgas-hlr-checkHostCertProxy.sh/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/glite-dgas-hlrd-dbcreate/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/glite-dgas-sumrecords2goc.pl/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrAddHlrAdmin.cpp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrAddResource.cpp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrArchiveOldRecords.cpp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrCheckQueue.cpp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrDelHlrAdmin.cpp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrDelResource.cpp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrHlrAdminGetInfo.cpp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrJTS2CSV.cpp/1.1.2.76/Fri Jun  1 13:13:51 2012//Tglite-dgas_branch_3_4_0
+/hlrRGetInfo.cpp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrSqlExec.cpp/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/hlrTranslateDb.cpp/1.1.2.1.2.2/Thu Feb  9 13:16:42 2012//Tglite-dgas_branch_3_4_0
+D

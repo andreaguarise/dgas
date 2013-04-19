@@ -1,0 +1,13 @@
+/Makefile.am/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/dbWaitress.cpp/1.1.2.1.2.2/Mon Dec  6 12:16:06 2010//Tglite-dgas_branch_3_4_0
+/dbWaitress.h/1.1.2.1.2.2/Tue Feb 28 15:09:00 2012//Tglite-dgas_branch_3_4_0
+/hlrAdmin.cpp/1.1.2.1.2.1/Thu Oct 21 14:45:54 2010//Tglite-dgas_branch_3_4_0
+/hlrGenericQuery.cpp/1.1.2.1.2.1/Thu Oct 21 14:45:54 2010//Tglite-dgas_branch_3_4_0
+/hlrResource.cpp/1.1.2.1.2.1/Thu Oct 21 14:45:54 2010//Tglite-dgas_branch_3_4_0
+/hlrTransIn.cpp/1.1.2.1.2.2/Thu Nov 18 13:31:36 2010//Tglite-dgas_branch_3_4_0
+/hlrTransaction.cpp/1.1.2.1.2.1/Thu Oct 21 14:45:54 2010//Tglite-dgas_branch_3_4_0
+/qTransaction.cpp/1.1.2.1.2.1/Thu Oct 21 14:45:54 2010//Tglite-dgas_branch_3_4_0
+/serviceCommonUtl.cpp/1.1.2.1.2.1/Thu Oct 21 14:45:54 2010//Tglite-dgas_branch_3_4_0
+/serviceCommonUtl.h/1.1.2.1/Wed Oct 13 12:59:49 2010//Tglite-dgas_branch_3_4_0
+/transInLog.cpp/1.1.2.1.2.1/Thu Oct 21 14:45:54 2010//Tglite-dgas_branch_3_4_0
+D
