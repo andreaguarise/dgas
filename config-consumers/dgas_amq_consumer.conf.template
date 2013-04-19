@@ -1,0 +1,27 @@
+#dgas_activemq-producer.conf.template
+
+consumerLockFileName = "/var/lock/dgas/dgas-hlr-amq-consumer.lock"
+consumerLogFileName = "/var/log/dgas/dgas-hlr-amq-consumer.log"
+amqBrokerUri = "tcp://dgas-broker.to.infn.it:61616"
+dgasAMQTopic = "DGAS"
+hlr_user = "root"
+
+managerLockFileName = "/var/lock/dgas/dgas-hlr-amq-manager.lock"
+managerLogFileName = "/usr/log/dgas/dgas-hlr-amq-manager.log"
+
+#This defines the command used to parse incoming messages. It takes input message from STDIN and must output a legacy record on STDOUT 
+
+messageParsingCommand = "cat"
+
+#accountCheckPolicy defines the resource authorization policy for the records coming
+#through the AMQ channel. It should be set the very same way as in the dgas_hlr.conf file
+accountCheckPolicy = "lazy"
+
+#the following parameters define the MySQL DB connection parameters. These must be the same
+# as in dgas_hlr.conf
+hlr_sql_server = "localhost"
+hlr_sql_user = "root"
+hlr_sql_password = ""
+hlr_sql_dbname = "hlr"
+hlr_tmp_sql_dbname = "hlr_tmp"
+
