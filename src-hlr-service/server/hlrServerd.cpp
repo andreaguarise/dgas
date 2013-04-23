@@ -473,6 +473,7 @@ int main ( int argc, char * argv[] )
 				hlr_log(logString,&logStream,8);
 				while ( keep_going )
 				{
+					usleep(threadPoolUsecDelay);
 					theAgent[i] = theServer->Listen();
 					if (theAgent[i])
 					{
