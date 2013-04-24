@@ -150,49 +150,49 @@ int ATMResource_parse_xml (string &doc, ATM_job_record *usage_info)
 						parseAttribute ("USER", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found USER=" + buffer;
+					//logBuff = "ATMengine: found USER=" + buffer;
 					usage_info->localUserId = buffer;	
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("PROCESSORS", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found PROCESSORS=" + buffer;
+					//logBuff = "ATMengine: found PROCESSORS=" + buffer;
 					usage_info->processors = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("URCREATION", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found URCREATION=" + buffer;
+					//logBuff = "ATMengine: found URCREATION=" + buffer;
 					usage_info->urCreation = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("jobName", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found jobName=" + buffer;
+					//logBuff = "ATMengine: found jobName=" + buffer;
 					usage_info->jobName = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("group", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found group=" + buffer;
+					//logBuff = "ATMengine: found group=" + buffer;
 					usage_info->localGroup = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("execHost", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found execHost=" + buffer;
+					//logBuff = "ATMengine: found execHost=" + buffer;
 					usage_info->execHost = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("SiteName", attributes);
@@ -214,107 +214,107 @@ int ATMResource_parse_xml (string &doc, ATM_job_record *usage_info)
 						parseAttribute ("start", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found start=" + buffer;
+					//logBuff = "ATMengine: found start=" + buffer;
 					usage_info->start = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("end", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found end=" + buffer;
+					//logBuff = "ATMengine: found end=" + buffer;
 					usage_info->end = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("ctime", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found ctime=" + buffer;
+					//logBuff = "ATMengine: found ctime=" + buffer;
 					usage_info->ctime = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("qtime", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found qtime=" + buffer;
+					//logBuff = "ATMengine: found qtime=" + buffer;
 					usage_info->qtime = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("etime", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found etime=" + buffer;
+					//logBuff = "ATMengine: found etime=" + buffer;
 					usage_info->etime = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("fqan", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found fqan=" + buffer;
+					//logBuff = "ATMengine: found fqan=" + buffer;
 					usage_info->userFqan = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("si2k", attributes);
 				if ( buffer != "")//backwardCompatibility
 				{
-					logBuff = "ATMengine: found si2k=" + buffer;
+					//logBuff = "ATMengine: found si2k=" + buffer;
 					usage_info->iBench = buffer;
 					usage_info->iBenchType = "si2k";
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("sf2k", attributes);
 				if ( buffer != "")//backwardCompatibility
 				{
-					logBuff = "ATMengine: found sf2k=" + buffer;
+					//logBuff = "ATMengine: found sf2k=" + buffer;
 					usage_info->fBench = buffer;
 					usage_info->fBenchType = "sf2k";
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("iBench", attributes);
 				if ( buffer != "")//backwardCompatibility
 				{
-					logBuff = "ATMengine: found iBench=" + buffer;
+					//logBuff = "ATMengine: found iBench=" + buffer;
 					usage_info->iBench = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("fBench", attributes);
 				if ( buffer != "")//backwardCompatibility
 				{
-					logBuff = "ATMengine: found fBench=" + buffer;
+					//logBuff = "ATMengine: found fBench=" + buffer;
 					usage_info->fBench = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("iBenchType", attributes);
 				if ( buffer != "")//backwardCompatibility
 				{
-					logBuff = "ATMengine: found iBenchType=" + buffer;
+					//logBuff = "ATMengine: found iBenchType=" + buffer;
 					usage_info->iBenchType = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("fBenchType", attributes);
 				if ( buffer != "")//backwardCompatibility
 				{
-					logBuff = "ATMengine: found fBenchType=" + buffer;
+					//logBuff = "ATMengine: found fBenchType=" + buffer;
 					usage_info->fBenchType = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("tz", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found tz=" + buffer;
+					//logBuff = "ATMengine: found tz=" + buffer;
 					usage_info->tz = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("accountingProcedure", attributes);
@@ -328,9 +328,9 @@ int ATMResource_parse_xml (string &doc, ATM_job_record *usage_info)
 						parseAttribute ("atmClientVersion", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found atmClientVersion=" + buffer;
+					//logBuff = "ATMengine: found atmClientVersion=" + buffer;
 					usage_info->atmClientVersion = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("userVo", attributes);
@@ -344,9 +344,9 @@ int ATMResource_parse_xml (string &doc, ATM_job_record *usage_info)
 						parseAttribute ("ceHostName", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found ceHostName=" + buffer;
+					//logBuff = "ATMengine: found ceHostName=" + buffer;
 					usage_info->ceHostName = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer = 
 						parseAttribute ("ceCertificateSubject", attributes);
@@ -360,41 +360,41 @@ int ATMResource_parse_xml (string &doc, ATM_job_record *usage_info)
 						parseAttribute ("execCe", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found execCe=" + buffer;
+					//logBuff = "ATMengine: found execCe=" + buffer;
 					usage_info->execCe = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer =
 						parseAttribute ("submitHost", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found submitHost=" + buffer;
+					//logBuff = "ATMengine: found submitHost=" + buffer;
 					usage_info->submitHost = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer =
 						parseAttribute ("lrmsServer", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found lrmsServer=" + buffer;
+					//logBuff = "ATMengine: found lrmsServer=" + buffer;
 					usage_info->lrmsServer = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer =
 						parseAttribute ("voOrigin", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found voOrigin=" + buffer;
+					//logBuff = "ATMengine: found voOrigin=" + buffer;
 					usage_info->voOrigin = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				buffer =
 						parseAttribute ("GlueCEInfoTotalCPUs", attributes);
 				if ( buffer != "")
 				{
-					logBuff = "ATMengine: found GlueCEInfoTotalCPUs=" + buffer;
+					//logBuff = "ATMengine: found GlueCEInfoTotalCPUs=" + buffer;
 					usage_info->glueCEInfoTotalCPUs = buffer;
-					hlr_log(logBuff, &logStream, 7);
+					//hlr_log(logBuff, &logStream, 7);
 				}
 				jobInfoNode.release();
 			}

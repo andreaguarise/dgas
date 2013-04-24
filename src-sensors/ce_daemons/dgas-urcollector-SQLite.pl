@@ -2446,7 +2446,7 @@ sub processLrmsLogs
 		next if ( $lastId eq "" );
 		&printLog( 5, "Found last record to process this round: $lastId, within $lastFile",
 					1 );
-	    $canProcess = 0;
+	    #$canProcess = 0;
 		
 		while ( $keepGoing && @sortedLrmsLogFiles )
 		{

@@ -142,19 +142,10 @@ int checkDuplicate(ATM_job_record& usage_info,bool& success,bool& possibleResubm
 		hlr_log ( logBuff, &logStream,4);
 		// there is such a transaction, check wether the new one
 		// is outOfBand or not:
-		if ( usage_info.accountingProcedure == "" )
+		if ( usage_info.accountingProcedure != "grid" )
 		{
-			// record is duplicated and accountingProcedure not declared: IGNORING
-		        logBuff ="checkDuplicate: New record hasn't accountingProcedure declared; ignoring!";
-			hlr_log ( logBuff, &logStream,4);
-			code = atoi(ATM_E_DUPLICATED_A);//70
-			success = false;
 			
-		}
-		else if (usage_info.accountingProcedure == "outOfBand")
-		{
-			// the new transaction is out of band, do NOT replace
-		        logBuff ="checkDuplicate: New record has accountingProcedure=outOfBand; ignoring!";
+		    logBuff ="checkDuplicate: New record has accountingProcedure=outOfBand or not set; ignoring!";
 			hlr_log ( logBuff, &logStream,4);
 			code = atoi(ATM_E_DUPLICATED_A);//70
 			success = false;
