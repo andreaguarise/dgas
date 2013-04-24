@@ -115,7 +115,6 @@ int dgas_ping_client(string &acct_id, int pingType, bool nogsi, int to, statusIn
 	{
 		SocketClient *theClient = new SocketClient(hlrHostname,hlrPort);
 			theClient -> SetTimeout(to);
-			theClient -> set_auth_timeout(to);
 			if (!(theClient -> Open()))
 			{
 				returnCode = atoi(E_NO_CONNECTION) ;
