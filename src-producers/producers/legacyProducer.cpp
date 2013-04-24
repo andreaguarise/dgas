@@ -80,37 +80,59 @@ int ATM_client_toResource(string& input ,string *server_answer, producerConfigur
 	alarm ( defConnTimeOut);
 	if ( conf.nogsi )
 	{
-		SocketClient *theClient;
+		SocketClient *theClient = new SocketClient(hlrHostname, hlrPort);
+			theClient->SetTimeout( defConnTimeOut );
+			if ( !(theClient->Open()))
+			{
+				 returncode = atoi(E_NO_CONNECTION);
+			}
+			else
+			{
+				if ( !(theClient->Send(input)))
+				{
+					 returncode = atoi(E_SEND_MESSAGE);
+				}
+				if ( !(theClient->Receive(output_message)) )
+				{
+					 returncode = atoi(E_RECEIVE_MESSAGE);
+				}
+				theClient->Close();
+				if (returncode == 0)
+				{
+					returncode = ATMc_parse_xml(output_message);
+				}
+				*server_answer = output_message;
+			}
+			delete theClient;
 	}
 	else
 	{
-		GSISocketClient *theClient;
+		GSISocketClient *theClient = new GSISocketClient(hlrHostname, hlrPort);
+			theClient-> ServerContact(hlrContact);
+			theClient->SetTimeout( defConnTimeOut );
+			if ( !(theClient->Open()))
+			{
+				 returncode = atoi(E_NO_CONNECTION);
+			}
+			else
+			{
+				if ( !(theClient->Send(input)))
+				{
+					 returncode = atoi(E_SEND_MESSAGE);
+				}
+				if ( !(theClient->Receive(output_message)) )
+				{
+					 returncode = atoi(E_RECEIVE_MESSAGE);
+				}
+				theClient->Close();
+				if (returncode == 0)
+				{
+					returncode = ATMc_parse_xml(output_message);
+				}
+				*server_answer = output_message;
+			}
+			delete theClient;
 	}
-	theClient = new GSISocketClient(hlrHostname, hlrPort);
-	if ( !conf.nogsi ) theClient-> ServerContact(hlrContact);
-	theClient->SetTimeout( defConnTimeOut );
-	if ( !(theClient->Open()))
-	{
-		 returncode = atoi(E_NO_CONNECTION); 
-	}
-	else
-	{
-		if ( !(theClient->Send(input)))
-		{
-			 returncode = atoi(E_SEND_MESSAGE);
-		}
-		if ( !(theClient->Receive(output_message)) )
-		{
-			 returncode = atoi(E_RECEIVE_MESSAGE);
-		}
-		theClient->Close();
-		if (returncode == 0)
-		{
-			returncode = ATMc_parse_xml(output_message);
-		}
-		*server_answer = output_message;
-	}
-	delete theClient;
 	return returncode;
 	
 }//ATM_client(string HLR_url_string, string HLR_contact_string ,ATM_job_data &job_data, ATM_usage_info &usage_info, string *server_answer)
