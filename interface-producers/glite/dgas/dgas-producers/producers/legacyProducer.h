@@ -40,6 +40,7 @@ struct producerConfiguration {
 	string hlrServer;
 	string paServer;
 	bool economicAccounting;
+	bool nogsi;
 };
 
 int ATM_client_toResource(

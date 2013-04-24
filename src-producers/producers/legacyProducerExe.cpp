@@ -9,11 +9,12 @@
 #include "glite/dgas/common/base/stringSplit.h"
 #include "glite/dgas/dgas-producers/producers/legacyProducer.h"
 
-#define OPTION_STRING "hv:l:s:"
+#define OPTION_STRING "hnv:l:s:"
 
 using namespace std;
 
 bool needs_help = 0;
+bool nogsi = false;
 
 string res_acct_bank_id_buff = ""; // HLR for this CE (URL)
 int verbosity = 3;
@@ -30,6 +31,7 @@ void help()
 	cerr << "-v  --verbosity <verbosity>      (0-3) default 3 maximum verbosity" << endl;
 	cerr << "-l  --localbankid <HLR contact>  Contact string of the (local) Resource HLR. (deprecated, use -s instead)" << endl;
 	cerr << "-s  --server <HLR contact>  Contact string of the (local) Resource HLR." << endl;
+	cerr << "-n  --nogsi  Do not use GSI" << endl;
 	cerr << endl;
 	cerr << "The HLR an PA contact strings have the form: \"host:port:host_cert_subject\"." << endl;
 	cerr << endl;
@@ -45,6 +47,7 @@ int options ( int argc, char **argv )
 		{"verbosity",1,0,'v'},
 		{"localbankid",1,0,'l'},
 		{"server",1,0,'s'},
+		{"nogsi",0,0,'n'},
 		{"help",0,0,'h'},
 		{0,0,0,0}
 	};
@@ -55,7 +58,8 @@ int options ( int argc, char **argv )
 			case 'v': verbosity=atoi(optarg); break;
 			case 'l': res_acct_bank_id_buff = optarg; break;
 			case 's': res_acct_bank_id_buff = optarg; break;
-			case 'h': needs_help =1; break;		  
+			case 'n': nogsi =true; break;
+			case 'h': needs_help = 1; break;
 			default : break;
 		}
 	return 0;
@@ -73,6 +77,7 @@ int main (int argc, char *argv[])
 	int res;
 	producerConfiguration pConf;
 	pConf.hlrServer = res_acct_bank_id_buff;
+	pConf.nogsi = nogsi;
 	string input;
 	ostringstream buf;
 	char ch;

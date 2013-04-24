@@ -78,8 +78,16 @@ int ATM_client_toResource(string& input ,string *server_answer, producerConfigur
 	
 	signal (SIGALRM, catch_alarm);
 	alarm ( defConnTimeOut);
-	GSISocketClient *theClient = new GSISocketClient(hlrHostname, hlrPort);
-	theClient-> ServerContact(hlrContact);
+	if ( conf.nogsi )
+	{
+		SocketClient *theClient;
+	}
+	else
+	{
+		GSISocketClient *theClient;
+	}
+	theClient = new GSISocketClient(hlrHostname, hlrPort);
+	if ( !conf.nogsi ) theClient-> ServerContact(hlrContact);
 	theClient->SetTimeout( defConnTimeOut );
 	if ( !(theClient->Open()))
 	{
