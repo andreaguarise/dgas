@@ -44,6 +44,7 @@ void* thrLoop(void *param)
 //			logString = "Authenticated Agent (NOGSI):" + tNString + "," + (tstruct->a)->PeerName();
 //			hlr_log( logString, &logStream,8);
 //		}
+		/*
 		else
 	 	{	
 		   logString = "Error while Authenticating agent: " + tNString +":" + (tstruct->s)->getErrMsg() + "," + (tstruct->a)->PeerName();
@@ -58,6 +59,7 @@ void* thrLoop(void *param)
 		   activeThreads--; 
 		   pthread_exit((void *) 0);
       	}
+      	*/
 	 	logString = tNString+ " Connection from : " +connectionInfo.hostName;
 		hlr_log (logString, &logStream, 5);
 		bool receiveOk = true;
