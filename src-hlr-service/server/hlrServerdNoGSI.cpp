@@ -30,7 +30,7 @@
 #include "glite/dgas/common/base/libdgas_log.h"
 #include "glite/dgas/common/base/int2string.h"
 #include "glite/dgas/common/base/localSecurity.h"
-#include "daemonFactory.h"
+#include "daemonFactoryNoGSI.h"
 #include "pingEngine.hpp"
 #include "glite/dgas/common/base/dgasVersion.h"
 #include "xmlHlrHelper.h"
@@ -433,7 +433,6 @@ int main ( int argc, char * argv[] )
 	lStatus.recordsPerBulkInsert = recordsPerBulkInsert;
 	// instantiate the Socket server
 	SocketServer *theServer = new SocketServer(server_port,threadNumber);
-	theServer->set_auth_timeout( defConnTimeOut );
 	if ( !(theServer -> Open()) )	
 	{
 		hlr_log( "ERROR opening the listener! Exiting", &logStream, 0 );
