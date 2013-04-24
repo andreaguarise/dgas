@@ -12,6 +12,7 @@ noinst_HEADERS = xmlHlrHelper.h
 
 sbin_PROGRAMS = \
 	dgas-hlr-listener \
+	dgas-hlr-listener-nogsi \
 	dgas-hlr-qmgr
 
 libexec_PROGRAMS = \
@@ -59,8 +60,40 @@ dgas_hlr_urforward_LDADD = \
 dgas_hlr_listener_SOURCES  = hlrServerd.cpp \
 	daemonFactory.cpp \
 	daemonFactory.h 
+	
+dgas_hlr_listener_nogsi_SOURCES  = hlrServerdNoGSI.cpp \
+	daemonFactoryNoGSI.cpp \
+	daemonFactoryNoGSI.h 
 
 dgas_hlr_listener_LDADD =  \
+	$(GLITE_DGAS_COMMON_XMLUTIL_LIBS) \
+	$(GLITE_DGAS_COMMON_CONFIG_LIBS) \
+	$(GLITE_DGAS_COMMON_LOCK_LIBS) \
+	$(GLITE_DGAS_COMMON_LOG_LIBS) \
+	$(GLITE_DGAS_COMMON_TLS_LIBS)\
+	$(GLOBUS_THR_LIBS) \
+	$(GLOBUS_GSS_THR_LIBS) \
+	$(GLOBUS_SSL_UTILS_LIBS) \
+	$(GLOBUS_LDAP_THR_LIBS) \
+	$(SERVICE_BASE_LIBS) \
+	./libdgasXmlHlrHelper.la \
+	$(top_builddir)/src-hlr-service/engines/libdgasAtmResourceEngine.la \
+	$(top_builddir)/src-hlr-service/engines/libdgasAtmResourceEngine2.la \
+	$(top_builddir)/src-hlr-service/engines/libdgasEngineCmnUtl.la \
+	$(top_builddir)/src-hlr-service/engines/libdgasPingEngine.la \
+	$(top_builddir)/src-hlr-service/engines/libdgasAdvancedQueryEngine2.la \
+	$(top_builddir)/src-hlr-service/engines/libdgasUrConcentratorEngine.la \
+	$(top_builddir)/src-hlr-service/engines/libdgasGetRecordEngine.la \
+	$(top_builddir)/src-hlr-service/base/libglite_dgas_serviceCommonUtils.la \
+	$(top_builddir)/src-hlr-service/base/libglite_dgas_dbhelper.la \
+	$(top_builddir)/src-hlr-service/base/libglite_dgas_dbWaitress.la \
+	$(top_builddir)/src-hlr-service/base/libdgas_serviceVersion.la \
+	-lglite_dgas_localSecurity \
+	-lglite_dgas_tls_gsisocket_pp \
+	-lglite_dgas_hlrGenericQuery \
+	$(DBLIBS) $(VOMSLIBS)
+	
+dgas_hlr_listener_nogsi_LDADD =  \
 	$(GLITE_DGAS_COMMON_XMLUTIL_LIBS) \
 	$(GLITE_DGAS_COMMON_CONFIG_LIBS) \
 	$(GLITE_DGAS_COMMON_LOCK_LIBS) \
