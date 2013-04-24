@@ -54,6 +54,7 @@ struct errorInfo {
 //0 on success > 0 on failure
 int dgas_ping_client(string &acct_id,
 	        int pingType,
+	        bool nogsi,
 	        int timeout,
 		statusInfo *status,
 		errorInfo *errors,

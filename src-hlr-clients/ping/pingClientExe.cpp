@@ -9,12 +9,13 @@
 #include "glite/dgas/common/base/xmlUtil.h"
 #include "glite/dgas/hlr-clients/ping/pingClient.h"
 
-#define OPTION_STRING "hds:t:T:"
+#define OPTION_STRING "hdns:t:T:"
 
 using namespace std;
 
 bool needs_help = 0;
 bool debug = false;
+bool nogsi = false;
 
 string acct_id_buff = ""; 
 int type_buff = 0;
@@ -30,6 +31,7 @@ void help()
 	cerr << "Where options are:" << endl;
 	cerr << "-h  --help                     Display this help and exit." << endl;
 	cerr << "-d  --debug                    Display debug information." << endl;
+	cerr << "-n  --nogsi                    Contact a nogsi server." << endl;
 	cerr << "-s  --server <HLR/PA contact>  Contact string of HLR or PA server." << endl;
 	cerr << "                               The HLR contact string has the form:" << endl;
 	cerr << "                               \"host:port:host_cert_subject\"" << endl;
@@ -50,6 +52,7 @@ int options ( int argc, char **argv )
 		{"type",1,0,'t'},
 		{"Timeout",1,0,'T'},
 		{"debug",0,0,'d'},
+		{"nogsi",0,0,'n'},
 		{"help",0,0,'h'},
 		{0,0,0,0}
 	};
@@ -60,7 +63,8 @@ int options ( int argc, char **argv )
 			case 's': acct_id_buff=optarg; break;
 			case 't': type_buff = atoi(optarg); break;
 			case 'T': to = atoi(optarg); break;
-			case 'd': debug =true; break;		  
+			case 'd': debug =true; break;
+			case 'n': nogsi =true; break;
 			case 'h': needs_help =1; break;		  
 			default : break;
 		}
@@ -97,6 +101,7 @@ int main (int argc, char *argv[])
 	res = dgas_ping_client( 
 			acct_id_buff,
 		    type_buff,
+		    nogsi,
 		    to,
 			&status, 
 			&errors, 

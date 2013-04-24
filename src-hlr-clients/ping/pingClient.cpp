@@ -93,7 +93,7 @@ int ping_parse_xml ( string &xmlInput, statusInfo *status, errorInfo *errors)
 }
 
 
-int dgas_ping_client(string &acct_id, int pingType, int to, statusInfo *status,errorInfo *errors , string *server_answer)
+int dgas_ping_client(string &acct_id, int pingType, bool nogsi, int to, statusInfo *status,errorInfo *errors , string *server_answer)
 {
 	int returnCode = 0;
 	string output_message; 
@@ -111,33 +111,65 @@ int dgas_ping_client(string &acct_id, int pingType, int to, statusInfo *status,e
 	}
 	//compose the xml message.
 	ping_xml_compose(pingType, &output_message);
-	GSISocketClient *theClient = new GSISocketClient(hlrHostname,hlrPort);
-	theClient-> ServerContact(hlrContact);
-	theClient -> SetTimeout(to);
-	theClient -> set_auth_timeout(to);
-	if (!(theClient -> Open()))
+	if ( nogsi )
 	{
-		returnCode = atoi(E_NO_CONNECTION) ;
+		SocketClient *theClient = new SocketClient(hlrHostname,hlrPort);
+			theClient -> SetTimeout(to);
+			theClient -> set_auth_timeout(to);
+			if (!(theClient -> Open()))
+			{
+				returnCode = atoi(E_NO_CONNECTION) ;
+			}
+			else
+			{
+				if ( !(theClient->Send(output_message)) )
+				{
+					returnCode =  atoi(E_SEND_MESSAGE);
+				}
+				if ( !(theClient->Receive(input_message)) )
+				{
+					returnCode =  atoi(E_RECEIVE_MESSAGE);
+				}
+				theClient->Close();
+				delete theClient;
+				*server_answer = input_message;
+				if (returnCode == 0)
+				{
+					returnCode = ping_parse_xml(input_message, status, errors);
+				}
+			}
 	}
 	else
-	{	
-		if ( !(theClient->Send(output_message)) )
-		{
-			returnCode =  atoi(E_SEND_MESSAGE);
-		}
-		if ( !(theClient->Receive(input_message)) )
-		{
-			returnCode =  atoi(E_RECEIVE_MESSAGE);
-		}
-		theClient->Close();
-		delete theClient;
-		*server_answer = input_message;
-		if (returnCode == 0)
-		{
-			returnCode = ping_parse_xml(input_message, status, errors);
-		}
+	{
+		GSISocketClient *theClient = new GSISocketClient(hlrHostname,hlrPort);
+			theClient-> ServerContact(hlrContact);
+			theClient -> SetTimeout(to);
+			theClient -> set_auth_timeout(to);
+			if (!(theClient -> Open()))
+			{
+				returnCode = atoi(E_NO_CONNECTION) ;
+			}
+			else
+			{
+				if ( !(theClient->Send(output_message)) )
+				{
+					returnCode =  atoi(E_SEND_MESSAGE);
+				}
+				if ( !(theClient->Receive(input_message)) )
+				{
+					returnCode =  atoi(E_RECEIVE_MESSAGE);
+				}
+				theClient->Close();
+				delete theClient;
+				*server_answer = input_message;
+				if (returnCode == 0)
+				{
+					returnCode = ping_parse_xml(input_message, status, errors);
+				}
+			}
 	}
+
 	return returnCode;
-}//pa_client
+}//ping_client
 
 
