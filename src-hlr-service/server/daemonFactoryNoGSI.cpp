@@ -35,15 +35,15 @@ void* thrLoop(void *param)
 		logString = "Authenticating Agent:" + tNString;
 		hlr_log( logString, &logStream,8);
 		connInfo connectionInfo;
-	 	logString ="in "+ tNString+ " Authenticating: " +(tstruct->a)->PeerName();
+	 	logString ="in "+ tNString+ " contacted from (NOGSI) : " +(tstruct->a)->PeerName();
 		hlr_log( logString, &logStream,7);
 		if ( tstruct->a ) (tstruct->a)-> SetTimeout( 10*defConnTimeOut );
-        	if ( (tstruct->s)->AuthenticateAgent((tstruct->a)) )
-		{
-			connectionInfo.hostName = (tstruct->a)->PeerName();
-			logString = "Authenticated Agent (NOGSI):" + tNString + "," + (tstruct->a)->PeerName();
-			hlr_log( logString, &logStream,8);
-		}
+//	if ( (tstruct->s)->AuthenticateAgent((tstruct->a)) )
+//		{
+		connectionInfo.hostName = (tstruct->a)->PeerName();
+//			logString = "Authenticated Agent (NOGSI):" + tNString + "," + (tstruct->a)->PeerName();
+//			hlr_log( logString, &logStream,8);
+//		}
 		else
 	 	{	
 		   logString = "Error while Authenticating agent: " + tNString +":" + (tstruct->s)->getErrMsg() + "," + (tstruct->a)->PeerName();
