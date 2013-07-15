@@ -2328,13 +2328,18 @@ sub putBuffer
 
 # this is done only if no SIGINT was received!
 #print "".localtime().": Writing info on last processed job in buffer $buffName.";
-		open( OUT, "> $buffName" ) || return 2;
+		open(TMP, ">", "$buffName.tmp") || return 2;
 		my $dateBuff = localtime( $_[2] );
-		print OUT "$_[1]:$_[2]:$dateBuff";
+		print TMP "$_[1]:$_[2]:$dateBuff";
+		#
+		#open( OUT, "> $buffName" ) || return 2;
+		#
+		#print OUT "$_[1]:$_[2]:$dateBuff";
 		&printLog( 7, "Write in Buffer lrmsId:$_[1];timstamp:$_[2] ($dateBuff)", 1 );
+		close(TMP);
+		rename($buffName, "$buffName.ori");
+        rename("$buffName.tmp", $buffName);
 		$bufferTimestampGlobal = $_[2];
-		close(OUT);
-
 		my $tmpBuffer = "${buffName}_tmp";
 		if ( -e $tmpBuffer )
 		{
