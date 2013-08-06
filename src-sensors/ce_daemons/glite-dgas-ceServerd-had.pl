@@ -26,7 +26,7 @@ else
 
 ## Global variable initialization
 
-my $T = 3;
+my $T = 30;
 
 my $keepGoing = 1;
 
