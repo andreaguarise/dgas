@@ -515,7 +515,7 @@ sub execCommand
 	else
 	{
 		eval {
-			local $SIG{ALRM} = sub { die "alarm\n" };    # NB: \n required
+			local $SIG{ALRM} = sub { fork "alarm\n" };    # NB: \n required
 			alarm $timeout;
 			$status = system("$command &>/dev/null");
 			alarm 0;

@@ -35,7 +35,7 @@ use Time::HiRes qw(usleep ualarm gettimeofday tv_interval);
 # my $MAX_LSF_RECORDLENGTH_FOR_QUOTEWORDS = 4096;
 # this is the maximum LSF record length that we'll parse with
 # quotewords, otherwise we risk a segmentation fault. Longer
-# records qill be parsed by a costum function (splitCVSstring)
+# records will be parsed by a costum function (splitCVSstring)
 
 START:
 
@@ -524,8 +524,9 @@ MAIN: while ($keepGoing)
 	}
 
 	# write buffer (lastJob and lastTimestamp), if necessary!
-if ($lastJob ne $startJob)
-{
+	if ( $lastJob ne $startJob )
+	{
+
 		#commit transaction
 		&printLog( 8, "Commit..." );
 		my $commitSuccesfull = 1;
@@ -546,17 +547,17 @@ if ($lastJob ne $startJob)
 				$commitSuccesfull = 0;
 			}
 		}
-		
-		if ( ($startJob ne $lastJob) && ($lastJob ne "") )
+
+		if ( ( $startJob ne $lastJob ) && ( $lastJob ne "" ) )
 		{
 			&printLog( 5,
 "Processed from $startJob (timestamp $startTimestamp) to $lastJob (timestamp $lastTimestamp). Updating buffer $collectorBufferFileName."
-		);
+			);
 			&putBuffer( $collectorBufferFileName, $lastJob, $lastTimestamp );
 			$startJob       = $lastJob;
 			$startTimestamp = $lastTimestamp;
 		}
-}
+	}
 
 	if ($onlyOneIteration)
 	{
@@ -578,14 +579,18 @@ if ($lastJob ne $startJob)
 			usleep(100000);
 			$secsWaited++;
 		}
-		#additional sleep for fine tuning of resource consumption use collectorPollInterval to set this (this is far to be optimal FIXME)
-	    $secsWaited = 0;
+
+#additional sleep for fine tuning of resource consumption use collectorPollInterval to set this (this is far to be optimal FIXME)
+		$secsWaited = 0;
 		while ( $keepGoing && $secsWaited < $collectorPollInterval )
 		{
 			usleep(100000);
 			$secsWaited++;
 		}
-		if (($mainPollInterval == 0 ) && ( $collectorPollInterval == 0) ) { usleep(10000);} #sleep at least  ten millisecond
+		if ( ( $mainPollInterval == 0 ) && ( $collectorPollInterval == 0 ) )
+		{
+			usleep(10000);
+		}    #sleep at least  ten millisecond
 	}
 
 }
@@ -692,8 +697,13 @@ sub quotewords
 	return (@allwords);
 }
 
-sub Exit ()
+sub Exit
 {
+	my $exitStatus = 0;
+	if ( $_[0] )
+	{
+		$exitStatus = $_[0];
+	}
 	&printLog( 8, "Exiting..." );
 	if ( &delLock($collectorLockFileName) != 0 )
 	{
@@ -706,7 +716,7 @@ sub Exit ()
 	&printLog( 8, "Commit" );
 	&dbh->commit;
 	&printLog( 4, "Exit." );
-	exit(0);
+	exit($exitStatus);
 }
 
 sub bootstrapLog
@@ -727,6 +737,7 @@ sub bootstrapLog
 
 sub printLog
 {
+
 	#my $logLevel = $_[0];
 	#my $log      = $_[1];
 	if ( $_[0] <= $systemLogLevel )
@@ -778,7 +789,7 @@ sub printLog
 	}
 }
 
-sub parseRecord    #WAS parseFile
+sub parseRecord
 {
 	my $recordString = $_[0];
 
@@ -1056,7 +1067,7 @@ sub parseUR_sge
 	$urGridInfo{end}        = $URArray[10];
 	$urGridInfo{exitStatus} = $URArray[12];
 	$urGridInfo{walltime}   = $URArray[13];
-	$urGridInfo{processors}  = $URArray[34];
+	$urGridInfo{processors} = $URArray[34];
 	$urGridInfo{cput}       = $URArray[36];
 	$urGridInfo{mem}        = $URArray[17] + $URArray[18] + $URArray[19];
 	$urGridInfo{vmem}       = $URArray[42];
@@ -1396,7 +1407,10 @@ sub callAtmClient
 		&searchForNumCpus( $configValues{gipDynamicTmpCEFiles},
 			$urGridInfo{queue}, $urGridInfo{end}, $urGridInfo{numCPUs} );
 	}
-	&printLog(6,"USER_DN:$userDN;USER_FQAN:$urGridInfo{fqan};CE_ID:$urGridInfo{resGridId};GRID_ID:$gridJobId");
+	&printLog( 6,
+"USER_DN:$userDN;USER_FQAN:$urGridInfo{fqan};CE_ID:$urGridInfo{resGridId};GRID_ID:$gridJobId"
+	);
+
 	# building command:
 	my $legacyCmd = "$dgasLocation/libexec/dgas-atmClient";
 
@@ -1905,7 +1919,7 @@ sub error
 	{
 		&printLog( 2, "$_[0]" );
 	}
-	exit(1);
+	&Exit(1);
 }
 
 ## ----- subs to extract GlueCEInfoTotalCPUs ----- ##
@@ -2312,35 +2326,37 @@ sub putBuffer
 	#                1 = last LRMS job id
 	#                2 = last LRMS job timestamp (log time)
 	my $buffName = $_[0];
-	
+
 	if ( $_[1] eq "" )
 	{
-		&printLog( 1, "ASSERT Write in Buffer $_[0]; EMPTY LRMS ID. Not Updating Buffer.", 1 );
+		&printLog(
+			1,
+			"ASSERT Write in Buffer $_[0]; EMPTY LRMS ID. Not Updating Buffer.",
+			1
+		);
 		return;
 	}
 	if ( $keepGoing == 1 )
 	{
 
-# this is done only if no SIGINT was received!
-#print "".localtime().": Writing info on last processed job in buffer $buffName.";
-		open(TMP, ">", "$buffName.tmp") || return 2;
+		# this is done only if no SIGINT was received!
+
+		open( TMP, ">", "$buffName.tmp" ) || return 2;
 		my $dateBuff = localtime( $_[2] );
 		print TMP "$_[1]:$_[2]:$dateBuff";
-		#
-		#open( OUT, "> $buffName" ) || return 2;
-		#
-		#print OUT "$_[1]:$_[2]:$dateBuff";
-		&printLog( 7, "Write in Buffer lrmsId:$_[1];timstamp:$_[2] ($dateBuff)", 1 );
+		&printLog( 7, "Write in Buffer lrmsId:$_[1];timstamp:$_[2] ($dateBuff)",
+			1 );
 		close(TMP);
-		rename($buffName, "$buffName.ori");
-        rename("$buffName.tmp", $buffName);
+		rename( $buffName, "$buffName.ori" );
+		rename( "$buffName.tmp", $buffName );
 		$bufferTimestampGlobal = $_[2];
 		my $tmpBuffer = "${buffName}_tmp";
+
 		if ( -e $tmpBuffer )
 		{
 			print
 			  "Removing temporary buffer $tmpBuffer ... not required anymore!";
-			`rm -f $tmpBuffer &> /dev/null`; 
+			`rm -f $tmpBuffer &> /dev/null`;
 		}
 	}
 	return 0;
@@ -2363,8 +2379,9 @@ sub readBuffer
 	$_[2] = $tstamp;
 	if ( $_[1] eq "" )
 	{
-		&printLog( 1, "ASSERT Read Buffer $_[0]; EMPTY LRMS ID. This is bad.", 1 );
-		exit 1;
+		&printLog( 1, "ASSERT Read Buffer $_[0]; EMPTY LRMS ID. This is bad.",
+			1 );
+		&Exit(1);
 	}
 	return 0;
 }
@@ -2381,11 +2398,12 @@ sub processLrmsLogs
 	my $lastJob                = $_[2];
 	my $lastTimestamp          = $_[3];
 	my $ignoreJobsLoggedBefore = $_[4];
-	my $canProcess = 0;
-	my $reachedLastId = 0;
+	my $canProcess             = 0;
+	my $reachedLastId          = 0;
 
-	while ( $keepGoing )
+	while ($keepGoing)
 	{
+
 		# first get log files and timestamps:
 		my @lrmsLogFiles;
 		my %logFInodes = ();
@@ -2393,14 +2411,14 @@ sub processLrmsLogs
 
 		my $nothingProcessed =
 		  1;    # first assume process nothing in this iteration
-		&printLog(9, "readDir: $lrmsLogDir");
+		&printLog( 9, "readDir: $lrmsLogDir" );
 		my (
-				$dev,   $ino,     $mode, $nlink, $uid,
-				$gid,   $rdev,    $size, $atime, $mtime,
-				$ctime, $blksize, $blocks
-			);    # these are dummies
+			$dev,  $ino,   $mode,  $nlink, $uid,     $gid, $rdev,
+			$size, $atime, $mtime, $ctime, $blksize, $blocks
+		);      # these are dummies
 		opendir( DIR, $lrmsLogDir )
 		  || &error("Error: can't open dir $lrmsLogDir: $!");
+
 		while ( defined( my $file = readdir(DIR) ) )
 		{
 			next if ( $file =~ /^\.\.?$/ );    # skip '.' and '..'
@@ -2419,8 +2437,6 @@ sub processLrmsLogs
 			push @lrmsLogFiles, $file;
 
 			# keep track of last modification timestamp:
-
-			
 
 			# only inode, size and modification timestamp are interesting!
 			(
@@ -2442,19 +2458,22 @@ sub processLrmsLogs
 		#retrieve the lastId to process
 		#get the last fiel to process
 		my $lastFile = $sortedLrmsLogFiles[$#sortedLrmsLogFiles];
-		my $lastId = &getLastId($lastFile);
+		my $lastId   = &getLastId($lastFile);
 		next if ( $lastId eq "" );
-		&printLog( 5, "Found last record to process this round: $lastId, within $lastFile",
-					1 );
-	    #$canProcess = 0;
-		
+		&printLog(
+			5,
+"Found last record to process this round: $lastId, within $lastFile",
+			1
+		);
+
+		#$canProcess = 0;
+
 		while ( $keepGoing && @sortedLrmsLogFiles )
 		{
-			
+
 			$thisLogFile = shift(@sortedLrmsLogFiles);
 			&printLog( 7,
 				"LRMS log: $thisLogFile; modified: $logFMod{$thisLogFile}" );
-
 
 			if ( $logFSizes{$thisLogFile} == 0 )
 			{
@@ -2482,14 +2501,21 @@ sub processLrmsLogs
 				&printLog( 8,
 					"LRMS log: $thisLogFile; modified: $logFMod{$thisLogFile}"
 				);
-				
-				if ( ( $logFModPreviousRun{$thisLogFile} ==
-					$logFMod{$thisLogFile} ) )
+
+				if (
+					(
+						$logFModPreviousRun{$thisLogFile} ==
+						$logFMod{$thisLogFile}
+					)
+				  )
 				{
-					&printLog( 8, "skipping $thisLogFile because not changed since previous run.",
-                                        1 );
-                                        my $secsWaited = 0;
-			
+					&printLog(
+						8,
+"skipping $thisLogFile because not changed since previous run.",
+						1
+					);
+					my $secsWaited = 0;
+
 					while ( $keepGoing && $secsWaited < $timeInterval )
 					{
 						my $randomSleepTime =
@@ -2499,32 +2525,32 @@ sub processLrmsLogs
 						  ;    #equivale a sleep per valore float
 						$secsWaited++;
 					}
-			
-					usleep(1000);#sleep at leas one milli-second
-					
+
+					usleep(1000);    #sleep at leas one milli-second
+
 				}
 				else
 				{
 					&processLrmsLogFile(
 						$thisLogFile,
-						$startJob,    # $startJob
+						$startJob,          # $startJob
 						$startTimestamp,    # $startTimestamp
-						$lastJob,    # $lastJob
-						$lastTimestamp,    # $lastTimestamp
+						$lastJob,           # $lastJob
+						$lastTimestamp,     # $lastTimestamp
 						$ignoreJobsLoggedBefore,
 						$canProcess,
 						$reachedLastId
 					);
-				}		
+				}
 			}
 		}
-	last if ( $onlyOneIteration == 1 )
+		last if ( $onlyOneIteration == 1 );
 	}
 }
 
 sub getLastId
 {
-	my $fileName = $_[0];
+	my $fileName  = $_[0];
 	my $jobIdBuff = "";
 	if ( !open( LRMSLOGFILE, "tac $lrmsLogDir/$fileName |" ) )
 	{
@@ -2560,11 +2586,11 @@ sub processLrmsLogFile
 
 	my $ignoreJobsLoggedBefore = $_[5];
 
-	my $recordsCounter   = 0;
-	my $targetJobId = "";
-	my $canProcess = $_[6];
-	my $lastId = $_[7];
-	my $reachedLastId = $_[8];
+	my $recordsCounter     = 0;
+	my $targetJobId        = "";
+	my $canProcess         = $_[6];
+	my $lastId             = $_[7];
+	my $reachedLastId      = $_[8];
 	my $processedSomething = 0;
 
 	# for each job to process: check the CE accounting log dir (ordered by
@@ -2593,7 +2619,7 @@ sub processLrmsLogFile
 	}
 	if ( $startJob eq "" )
 	{
-		$canProcess = 1; #since this is the first record.
+		$canProcess = 1;    #since this is the first record.
 	}
 	my $line               = "";
 	my $lrmsEventTimestamp = "";
@@ -2621,18 +2647,17 @@ sub processLrmsLogFile
 		if ( $jobsThisStep == $jobPerTimeInterval )
 		{
 			my $secsWaited = 0;
-			
-				while ( $keepGoing && $secsWaited < $timeInterval )
-					{
-						my $randomSleepTime =
-						  0.25 - log( rand() )
-						  ;    #0.25 + v.a. exp unilatera, media = 1
-						select( undef, undef, undef, $randomSleepTime )
-						  ;    #equivale a sleep per valore float
-						$secsWaited++;
-					}
-			
-			usleep(1000);#sleep at leas one milli-second
+
+			while ( $keepGoing && $secsWaited < $timeInterval )
+			{
+				my $randomSleepTime =
+				  0.25 - log( rand() );    #0.25 + v.a. exp unilatera, media = 1
+				select( undef, undef, undef, $randomSleepTime )
+				  ;                        #equivale a sleep per valore float
+				$secsWaited++;
+			}
+
+			usleep(1000);                  #sleep at leas one milli-second
 			$jobsThisStep = 0;
 		}
 
@@ -2686,20 +2711,21 @@ sub processLrmsLogFile
 			return 0;
 		}
 
-		if (  $targetJobId eq $startJob )
+		if ( $targetJobId eq $startJob )
 		{
-			&printLog(7,"Found $targetJobId, mathces with buffer jobId: $startJob. Next job is the good one.");
+			&printLog( 7,
+"Found $targetJobId, mathces with buffer jobId: $startJob. Next job is the good one."
+			);
 			$_[6] = $canProcess = 1;
-			next;		
+			next;
 		}
 		if ( $canProcess == 0 )
 		{
-			&printLog(8,"Already accounted record: $targetJobId, skipping.");
+			&printLog( 8, "Already accounted record: $targetJobId, skipping." );
 			next;
 		}
 
 		# The record can be processed:
-
 
 		&printLog( 6,
 "Processing: $targetJobId,$lastJob with LRMS log event time(local):$lrmsEventTimeString(=$lrmsEventTimestamp); LRMS creation time: $job_ctime"
@@ -2789,12 +2815,12 @@ sub processLrmsLogFile
 		}
 		else
 		{
-			$_[3]=$lastJob = $targetJobId;
-			$_[4]=$lastTimestamp = $lrmsEventTimestamp;
+			$_[3] = $lastJob       = $targetJobId;
+			$_[4] = $lastTimestamp = $lrmsEventTimestamp;
 			if ( $targetJobId eq $lastId )
 			{
 				&printLog( 5,
-				"Written recor for last job this round: $lastId");
+					"Written recor for last job this round: $lastId" );
 				$_[8] = $reachedLastId = 1;
 				last;
 			}
@@ -2875,7 +2901,7 @@ sub processLrmsLogFile
 			#reset record counter for commit step.
 			$recordsCounter = 0;
 		}
-	
+
 	}  # while (<LRMSLOGFILE>) ...
 	   #process trailing records still not committed when the log file hits EOF.
 	if ( $recordsCounter != 0 )
@@ -2907,7 +2933,7 @@ sub processLrmsLogFile
 	close(LRMSLOGFILE);
 	if ( $processedSomething == 0 )
 	{
-		$_[6] = $canProcess = 1; ##May be add a check if this is the last file
+		$_[6] = $canProcess = 1;   ##May be add a check if this is the last file
 	}
 	if ( $keepGoing == 0 )
 	{
@@ -3083,16 +3109,15 @@ sub processCondorJobHistory
 
 #print "".localtime().": $jobsThisStep jobs processed. Sleeping for $parserProcessingInterval seconds.\n";
 			my $secsWaited = 0;
-				while ( $keepGoing && $secsWaited < $timeInterval )
-				{
-					my $randomSleepTime =
-					  0.25 - log( rand() )
-					  ;    #0.25 + v.a. exp unilatera, media = 1
-					select( undef, undef, undef, $randomSleepTime )
-					  ;    #equivale a sleep per valore float
-					$secsWaited++;					
-				}		
-				usleep(1000);#sleep at least one milli-second
+			while ( $keepGoing && $secsWaited < $timeInterval )
+			{
+				my $randomSleepTime =
+				  0.25 - log( rand() );    #0.25 + v.a. exp unilatera, media = 1
+				select( undef, undef, undef, $randomSleepTime )
+				  ;                        #equivale a sleep per valore float
+				$secsWaited++;
+			}
+			usleep(1000);                  #sleep at least one milli-second
 		}
 
 		if ( !( $classadLine = <JOBHIST> ) )
@@ -3771,12 +3796,14 @@ sub getLrmsTargetJobId
 
 sub getLrmsTargetJobId_pbs
 {
+
 	#my $jid = "";    # default: line to ignore!
 	if ( $_[0] =~ /^\d\d\/\d\d\/\d\d\d\d\s\d\d:\d\d:\d\d;E;(.*);.*/ )
 	{
 		return $1;
 	}
 	return "";
+
 	#my @ARRAY = split( " ", $_[0] );
 	#if ( scalar(@ARRAY) > 1 )
 	#{
@@ -3791,7 +3818,7 @@ sub getLrmsTargetJobId_pbs
 
 sub getLrmsTargetJobId_lsf
 {
-	my $jid = "";                 # default: line to ignore!
+	my $jid = "";    # default: line to ignore!
 
 	my @ARRAY = split( " ", $_[0] );
 
@@ -4092,5 +4119,4 @@ sub numRecords
 	&printLog( 8, "Records in DB:=$recordsNumber" );
 	return $recordsNumber;
 }
-
 
