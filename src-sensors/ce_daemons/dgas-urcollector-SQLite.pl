@@ -249,7 +249,14 @@ if ( &putLock($collectorLockFileName) != 0 )
 }
 else
 {
-	&printLog( 4, "Daemon started. Lock file succesfully created." );
+	if ($onlyOneIteration)
+	{
+		&printLog( 4, "urcollector running in single iteration mode. Lock file succesfully created." );
+	}
+	else
+	{
+		&printLog( 4, "Daemon started. Lock file succesfully created." );
+	}
 }
 
 if ( $jobsToProcess =~ /^grid$/i )
@@ -606,8 +613,14 @@ else
 }
 &printLog( 8, "Commit." );
 $dbh->commit;
-&printLog( 4, "Exit." );
-
+if ( $onlyOneIteration )
+{
+	&printLog( 7, "End of iteration. Instance exiting." );
+}
+else
+{
+	&printLog( 4, "Daemon shut down." );
+}
 exit(0);
 
 sub parse_line

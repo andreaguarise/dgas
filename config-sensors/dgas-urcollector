@@ -65,7 +65,7 @@ stopMain()
 {
         echo -n $"Stopping $executable:"
         kill `cat $URCOLLECTOR_LOCK` &>/dev/null
-        [ $? -eq 0 ] && echo_success || echo_failure
+        echo_success
         echo
 }
 
