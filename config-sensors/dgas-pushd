@@ -54,7 +54,7 @@ start()
 		echo
 		RETVAL=1
 	else
-                if [ -e $LOCKFILE ]
+            if [ -e $LOCKFILE ]
 		then
 			rm -f $LOCKFILE
 		fi

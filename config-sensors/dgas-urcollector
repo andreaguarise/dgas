@@ -49,9 +49,9 @@ fi
 
 RETVAL=0
 executable="dgas-urcollector-SQLite.pl"
-# Some functions to make the below more readable
+
 URCOLLECTOR=$PREFIX/sbin/$executable
-URCOLLECTOR_OPTIONS="$URCOLLECTOR_CONF"
+URCOLLECTOR_OPTIONS="--nodaemon $URCOLLECTOR_CONF"
 
 startMain()
 {
