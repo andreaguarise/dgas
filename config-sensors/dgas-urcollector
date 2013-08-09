@@ -64,12 +64,36 @@ startMain()
 stopMain()
 {
         echo -n $"Stopping $executable:"
-        kill `cat $URCOLLECTOR_LOCK` &>/dev/null
+        if [ -e $URCOLLECTOR_LOCK ]
+        then
+        	kill `cat $URCOLLECTOR_LOCK` &>/dev/null
+        fi
         echo_success
         echo
 }
 
 status()
+{
+	#return status of HAD since had is responisble for urcollector start cycle 
+	HAD_PID=`cat $HAD_LOCK 2> /dev/null`
+	[ -e $HAD_LOCK ] && ps auxw | grep $HAD_PID | grep dgas 2> /dev/null
+	if [ "$?" -eq 0 ]
+	then
+		echo "The process is running."
+		exit 0
+	else
+		echo "The process is not running."
+		if [ -e $HAD_LOCK ]
+		then
+			rm -f $HAD_LOCK
+			exit 1
+		else
+			exit 2
+		fi
+	fi
+}
+
+statusMain()
 {
 	URCOLLECTOR_PID=`cat $URCOLLECTOR_LOCK 2> /dev/null`
 	[ -e $URCOLLECTOR_LOCK ] && ps auxw | grep $URCOLLECTOR_PID | grep dgas 2> /dev/null
@@ -156,6 +180,9 @@ case "$1" in
 	status)
 		status
 		;;
+	statusMain)
+		statusMain
+		;;	
 	*)
 		echo $"Usage: $0 {start|stop|restart|status}"
 		RETVAL=1
