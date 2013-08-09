@@ -33,7 +33,7 @@ my $keepGoing = 1;
 while( $keepGoing )
 {
 	sleep($T);
-	$daemonStatus = system("$processScript status");
+	$daemonStatus = system("$processScript statusMain");
 	print "The daemon status is: $daemonStatus\n";
 	if ( $daemonStatus != 0 )
 	{
