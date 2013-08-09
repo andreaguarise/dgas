@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 
-#Gianduia, DGAS job monitor and Usage Records collector.
+#DGAS job monitor and Usage Records collector.
+#HAD daemon. keeps urcollecotr daemon alive or launches it in --nodaemon mode.
 use strict;
 use POSIX;
 
@@ -27,6 +28,11 @@ else
 ## Global variable initialization
 
 my $T = 60;
+if (exists $ARGV[1])
+{
+		$T = $ARGV[1];
+}
+
 
 my $keepGoing = 1;
 

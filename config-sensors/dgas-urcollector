@@ -30,6 +30,7 @@ then
     eval URCOLLECTOR_LOCK=`grep collectorLockFileName $URCOLLECTOR_CONF | grep "^#" -v | cut -d'"' -f 2`
 	eval SITE_NAME=`grep siteName $URCOLLECTOR_CONF | grep "^#" -v | cut -d'"' -f 2`
 	eval HAD_LOCK=`grep collectorHADLockFileName $URCOLLECTOR_CONF | grep "^#" -v | cut -d'"' -f 2`
+	eval COLLECTOR_PERIOD=`grep collectorPeriod $URCOLLECTOR_CONF | grep "^#" -v | cut -d'"' -f 2`
 else
 	echo "$URCOLLECTOR_CONF not found."
 	exit 1;
@@ -121,7 +122,7 @@ startHad()
         [ -e $HAD_LOCK ] && HADPID=`cat $HAD_LOCK` && DUMMY=`ps aux | grep dgas | grep $HADPID`	
 	if [ "$?" != "0" ]; then
 	    # starting HAD only if it is not yet running
-	    $PREFIX/sbin/glite-dgas-ceServerd-had.pl $STARTUP_SCRIPT &>/dev/null &
+	    $PREFIX/sbin/glite-dgas-ceServerd-had.pl $STARTUP_SCRIPT $COLLECTOR_PERIOD &>/dev/null &
 	    RETVAL=$?
 	    HADPID=$!
 	    [ "$?" -eq 0 ] && success $"$base startup" || failure $"$base startup"
