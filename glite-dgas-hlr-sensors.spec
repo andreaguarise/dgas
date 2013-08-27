@@ -1,7 +1,7 @@
 Summary: Emi.dgas.hlr-sensors
 Name: glite-dgas-hlr-sensors
-Version: 4.0.0
-Release: b16.centos6
+Version: %{versionstring}
+Release: centos6
 License: Apache Software License
 Group: System Environment/Libraries
 Packager: ETICS
@@ -9,7 +9,7 @@ BuildArch: x86_64
 Requires: perl-DBD-SQLite
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 AutoReqProv: yes
-Source: glite-dgas-hlr-sensors-4.0.0-b16.tar.gz
+Source: %{sourcefile}
 
 %define _unpackaged_files_terminate_build 0
 
