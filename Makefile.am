@@ -64,6 +64,14 @@ common-install: common-src-install common-interface-install
 
 common-install-etics: common-src-install
 
+common-rpm: common-install-etics
+	mkdir tgz
+	mkdir rpmbuild
+	mkdir rpmbuild/SPECS
+	mkdir rpmbuild/SOURCES
+	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-common.tar.gz *; else tar -czf ../tgz/glite-dgas-common.tar.gz --files-from /dev/null; fi; cd -
+	cp tgz/glite-dgas-common.tar.gz rpmbuild/SOURCES/
+	
 #hlr-clients-config:
 #	cd ./config-hlr-clients ; $(MAKE) $(AM_MAKEFLAGS)
 
