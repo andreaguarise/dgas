@@ -213,14 +213,20 @@ hlr-service-install: common-install\
 	hlr-service-src-install\
 	hlr-service-config-install
 
-#hlr-service-install-etics: \
-#	hlr-service-src-install\
-#	hlr-service-interface-install\
-#	hlr-service-config-install
-
 hlr-service-install-etics: \
 	hlr-service-src-install\
 	hlr-service-config-install
+	
+hlr-service-rpm: hlr-service-install-etics
+	mkdir tgz
+	mkdir rpmbuild
+	mkdir rpmbuild/SPECS
+	mkdir rpmbuild/SOURCES
+	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-service-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-service-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
+	cp tgz/glite-dgas-hlr-service-@VERSION@.tar.gz rpmbuild/SOURCES/
+	cp glite-dgas-hlr-service.spec rpmbuild/SPECS/
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-service-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-service.spec
+	
 
 producers-config:
 	cd ./config-producers ; $(MAKE) $(AM_MAKEFLAGS)
