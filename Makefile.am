@@ -250,14 +250,20 @@ producers-install: common-install\
 	producers-interface-install\
 	producers-config-install
 
-#producers-install-etics: \
-#	producers-src-install\
-#	producers-interface-install\
-#	producers-config-install
-
 producers-install-etics: \
 	producers-src-install\
 	producers-config-install
+	
+producers-rpm: producers-install-etics
+	mkdir tgz
+	mkdir rpmbuild
+	mkdir rpmbuild/SPECS
+	mkdir rpmbuild/SOURCES
+	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
+	cp tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz rpmbuild/SOURCES/
+	cp glite-dgas-hlr-sensors-producers.spec rpmbuild/SPECS/
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-sensors-producers.spec
+	
 
 consumers-config:
 	cd ./config-consumers ; $(MAKE) $(AM_MAKEFLAGS)
