@@ -73,7 +73,9 @@ common-rpm: common-install-etics
 	cp tgz/glite-dgas-common-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-common.spec rpmbuild/SPECS/
 	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-common-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-common.spec
-	
+	mv rpmbuild/RPMS/x86_64/*rpm ./
+	rm -rf tgz
+	rm -rf rpmbuild
 	
 #hlr-clients-config:
 #	cd ./config-hlr-clients ; $(MAKE) $(AM_MAKEFLAGS)
@@ -117,7 +119,9 @@ hlr-clients-rpm: hlr-clients-install-etics
 	cp tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-clients.spec rpmbuild/SPECS/
 	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-clients-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-clients.spec
-	
+	mv rpmbuild/RPMS/x86_64/*rpm ./
+	rm -rf tgz
+	rm -rf rpmbuild
 
 sensors-config:
 	cd ./config-sensors ; $(MAKE) $(AM_MAKEFLAGS)
@@ -157,7 +161,9 @@ sensors-rpm: sensors-install-etics
 	cp tgz/glite-dgas-hlr-sensors-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-sensors.spec rpmbuild/SPECS/
 	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-sensors-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-sensors.spec
-	
+	mv rpmbuild/RPMS/x86_64/*rpm ./
+	rm -rf tgz
+	rm -rf rpmbuild
 
 #pa-clients-src: 
 #	cd ./src-pa-clients ; $(MAKE) $(AM_MAKEFLAGS) 
@@ -226,7 +232,9 @@ hlr-service-rpm: hlr-service-install-etics
 	cp tgz/glite-dgas-hlr-service-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-service.spec rpmbuild/SPECS/
 	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-service-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-service.spec
-	
+	mv rpmbuild/RPMS/x86_64/*rpm ./
+	rm -rf tgz
+	rm -rf rpmbuild
 
 producers-config:
 	cd ./config-producers ; $(MAKE) $(AM_MAKEFLAGS)
@@ -269,7 +277,9 @@ producers-rpm: producers-install-etics
 	cp tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-sensors-producers.spec rpmbuild/SPECS/
 	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-sensors-producers.spec
-	
+	mv rpmbuild/RPMS/x86_64/*rpm ./
+	rm -rf tgz
+	rm -rf rpmbuild
 
 consumers-config:
 	cd ./config-consumers ; $(MAKE) $(AM_MAKEFLAGS)
@@ -314,7 +324,9 @@ consumers-rpm: consumers-install-etics
 	cp tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-service-consumers.spec rpmbuild/SPECS/
 	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-service-consumers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-service-consumers.spec
-	
+	mv rpmbuild/RPMS/x86_64/*rpm ./
+	rm -rf tgz
+	rm -rf rpmbuild
 
 
 stage:
