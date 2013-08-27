@@ -69,8 +69,11 @@ common-rpm: common-install-etics
 	mkdir rpmbuild
 	mkdir rpmbuild/SPECS
 	mkdir rpmbuild/SOURCES
-	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-common.tar.gz *; else tar -czf ../tgz/glite-dgas-common.tar.gz --files-from /dev/null; fi; cd -
-	cp tgz/glite-dgas-common.tar.gz rpmbuild/SOURCES/
+	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-common-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-common-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
+	cp tgz/glite-dgas-common-@VERSION@.tar.gz rpmbuild/SOURCES/
+	cp glite-dgas-common.spec rpmbuild/SPECS/
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-common-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-common.spec
+	
 	
 #hlr-clients-config:
 #	cd ./config-hlr-clients ; $(MAKE) $(AM_MAKEFLAGS)

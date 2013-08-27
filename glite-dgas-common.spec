@@ -1,14 +1,14 @@
 Summary: Common set of utility libraries needed by all DGAS modules
 Name: glite-dgas-common
-Version: 4.0.0
-Release: b16.centos6
+Version: %{versionstring}
+Release: centos6
 License: Apache Software License
 Group: System Environment/Libraries
 Packager: ETICS
 BuildArch: x86_64
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 AutoReqProv: yes
-Source: glite-dgas-common-4.0.0-b16.tar.gz
+Source: %{sourcefile}
 
 %define _unpackaged_files_terminate_build 0
 
