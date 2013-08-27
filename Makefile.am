@@ -154,7 +154,7 @@ sensors-rpm: sensors-install-etics
 	mkdir rpmbuild/SPECS
 	mkdir rpmbuild/SOURCES
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-sensors-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-sensors-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
-	cp tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz rpmbuild/SOURCES/
+	cp tgz/glite-dgas-sensors-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-sensors.spec rpmbuild/SPECS/
 	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-sensors-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-sensors.spec
 	
