@@ -107,6 +107,17 @@ hlr-clients-install: common-install\
 hlr-clients-install-etics: \
 	common \
  	hlr-clients-src-install
+ 	
+hlr-clients-rpm: hlr-clients-install-etics
+	mkdir tgz
+	mkdir rpmbuild
+	mkdir rpmbuild/SPECS
+	mkdir rpmbuild/SOURCES
+	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
+	cp tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz rpmbuild/SOURCES/
+	cp glite-dgas-hlr-clients.spec rpmbuild/SPECS/
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-clients-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-clients.spec
+	
 
 sensors-config:
 	cd ./config-sensors ; $(MAKE) $(AM_MAKEFLAGS)
