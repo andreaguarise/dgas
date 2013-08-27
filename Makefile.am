@@ -301,14 +301,20 @@ consumers-install: common-install\
 	consumers-interface-install\
 	consumers-config-install
 
-#consumers-install-etics: \
-#	consumers-src-install\
-#	consumers-interface-install\
-#	consumers-config-install
-
 consumers-install-etics: \
 	consumers-src-install\
 	consumers-config-install
+	
+consumers-rpm: consumers-install-etics
+	mkdir tgz
+	mkdir rpmbuild
+	mkdir rpmbuild/SPECS
+	mkdir rpmbuild/SOURCES
+	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
+	cp tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz rpmbuild/SOURCES/
+	cp glite-dgas-hlr-service-consumers.spec rpmbuild/SPECS/
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-service-consumers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-service-consumers.spec
+	
 
 
 stage:
