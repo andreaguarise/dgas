@@ -10,6 +10,8 @@ BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 AutoReqProv: yes
 Source: glite-dgas-hlr-clients-4.0.0-b16.tar.gz
 
+%define _unpackaged_files_terminate_build 0
+
 %description
 emi.dgas.hlr-clients
 
