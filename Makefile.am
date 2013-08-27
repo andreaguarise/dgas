@@ -328,6 +328,13 @@ consumers-rpm: consumers-install-etics
 	rm -rf tgz
 	rm -rf rpmbuild
 
+rpm: common-rpm \
+	consumers-rpm \
+	producers-rpm \
+	hlr-service-rpm \
+	sensors-rpm \
+	hlr-clients-rpm
+	DESTDIR=${PWD}/etics-tmp
 
 stage:
 	@set fnord $(MAKEFLAGS); amf=$$2; \
