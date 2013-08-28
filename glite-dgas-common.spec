@@ -5,7 +5,7 @@ Release: centos6
 License: Apache Software License
 Group: System Environment/Libraries
 Packager: ETICS
-BuildArch: x86_64
+BuildArch: %{platformstring}
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 AutoReqProv: yes
 Source: %{sourcefile}
