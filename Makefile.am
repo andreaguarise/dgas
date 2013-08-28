@@ -276,8 +276,8 @@ producers-rpm: producers-install-etics
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-sensors-producers.spec rpmbuild/SPECS/
-	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-sensors-producers.spec
-	mv rpmbuild/RPMS/x86_64/*rpm ./
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-sensors-producers.spec
+	mv rpmbuild/RPMS/@PLATFORM@/*rpm ./
 	rm -rf tgz
 	rm -rf rpmbuild
 
@@ -328,13 +328,13 @@ consumers-rpm: consumers-install-etics
 	rm -rf tgz
 	rm -rf rpmbuild
 
-rpm: common-rpm \
+rpm: \ 
+	common-rpm \
 	consumers-rpm \
 	producers-rpm \
 	hlr-service-rpm \
 	sensors-rpm \
 	hlr-clients-rpm
-	DESTDIR=${PWD}/etics-tmp
 
 stage:
 	@set fnord $(MAKEFLAGS); amf=$$2; \

@@ -26,8 +26,10 @@ See LICENCE file for details
 AC_REVISION([$Revision: 1.1.2.5.4.31.2.1 $])
 
 #Environment.
+PLATFORM=`uname -i`
 WORKDIR=`pwd`
 AC_SUBST(WORKDIR)
+AC_SUBST(PLATFORM)
 
 # Checks for programs.
 AC_PROG_CC
