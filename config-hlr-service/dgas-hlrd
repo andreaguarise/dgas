@@ -36,8 +36,10 @@ eval HLR_USER=`grep hlr_user $HLRD_CONF | grep "^#" -v  | cut -d'"' -f 2`
 eval HLHLR=`grep is2ndLevelHlr $HLRD_CONF | grep "^#" -v  | cut -d'"' -f 2`
 eval TDB_LOCK=`grep jtsCommandLock $HLRD_CONF | grep "^#" -v  | cut -d'"' -f 2`
 eval TMPJTS_LOCK=/tmp/dgas-jobTransSummary.lock
+eval ENABLENOGSI=`grep enable_no_gsi_daemon $HLRD_CONF | grep "^#" -v  | cut -d'"' -f 2`
 
 [ ! -z $DGAS_VAR_DIR ]  || export DGAS_VAR_DIR=/var/
+[ ! -z $ENABLENOGSI ]  || export ENABLENOGSI="false"
 
 if [ -z $HLHLR ]
 then
@@ -69,6 +71,10 @@ export X509_USER_KEY=/var/spool/dgas/hostkey.pem
 # Some functions to make code easily readable
 HLRD=$PREFIX/sbin/dgas-hlr-listener
 eval HLRD_LOCK=`grep hlr_def_lock $HLRD_CONF | grep "^#" -v | cut -d'"' -f 2`
+HLRD_NOGSI=$PREFIX/sbin/dgas-hlr-listener-nogsi
+eval HLRD_NOGSI_LOCK=`grep hlr_nogsi_def_lock $HLRD_CONF | grep "^#" -v | cut -d'"' -f 2`
+eval HLRD_NOGSI_LOG=`grep hlr_nogsi_def_log $HLRD_CONF | grep "^#" -v | cut -d'"' -f 2`
+
 HLRD_OPTIONS="-c $HLRD_CONF"
 
 if [ -e /etc/rc.d/init.d/dgas-hlrd ]
@@ -137,6 +143,28 @@ startMain()
 		[ "$?" -eq 0 ] && success $"$base startup" || failure $"$base startup"
         fi
 	echo
+	
+	if [ $ENABLENOGSI == "true" ];
+	then
+		echo -n $"Starting $prog:"
+		[ -e $HLRD_NOGSI_LOCK ] && HLRD_NOGSI_PID=`cat $HLRD_NOGSI_LOCK` && ps auxw | grep $HLRD_NOGSI_PID | grep dgas &> /dev/null
+        	if [ "$?" -eq 0 ]
+        	then
+            	    echo -n " already running (pid $HLRD_NOGSI_PID)."
+                	failure $"$base startup"
+                	RETVAL=1
+        	else
+            	    if [ -e $HLRD_NOGSI_LOCK ]
+                	then
+                	#        echo -n " Found pending lock file, removing it."
+                    	    rm -f $HLRD_NOGSI_LOCK
+                	fi
+			$HLRD_NOGSI $HLRD_OPTIONS -L $HLRD_NOGSI_LOCK -l $HLRD_NOGSI_LOG  2>/dev/null & 
+			RETVAL=$?
+			[ "$?" -eq 0 ] && success $"$base startup" || failure $"$base startup"
+        	fi
+		echo
+	fi
 
 	if [ $HLHLR == "false" ];
 	then
@@ -190,7 +218,7 @@ startMain()
 
 stopMain()
 {
-        RETVAL=0
+    RETVAL=0
 	echo -n $"Stopping $prog:"
         PID0=`cat $HLRD_LOCK 2> /dev/null`
 	if [ "$?" -eq 0 ]; then
@@ -206,6 +234,25 @@ stopMain()
 	    failure $"$base startup"
 	fi
 	echo
+	
+	if [ $ENABLENOGSI == "true" ];
+		then
+		echo -n $"Stopping $prog:"
+        	PID_NOGSI=`cat $HLRD_NOGSI_LOCK 2> /dev/null`
+		if [ "$?" -eq 0 ]; then
+	    	# lock file exists, stop process
+	    	echo -n "$HLRD_NOGSI_LOCK (pid $PID_NOGSI)"
+	    	kill $PID_NOGSI &> /dev/null
+	    	RETVAL=$?
+	    [ "$?" -eq 0 ] && success $"$base startup" || failure $"$base startup"
+		else
+	    	# lock file doesn't exist, nothing to stop:
+	    	echo -n " already stopped"
+	    	RETVAL=1
+	    	failure $"$base startup"
+		fi
+		echo
+	fi
 
 	if [ $HLHLR == "false" ]; then
 		echo -n $"Stopping $prog1:"

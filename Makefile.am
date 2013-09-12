@@ -320,6 +320,7 @@ consumers-rpm: consumers-install-etics
 	mkdir rpmbuild
 	mkdir rpmbuild/SPECS
 	mkdir rpmbuild/SOURCES
+	mkdir rpmbuild/BUILD
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-service-consumers.spec rpmbuild/SPECS/
@@ -328,7 +329,7 @@ consumers-rpm: consumers-install-etics
 	rm -rf tgz
 	rm -rf rpmbuild
 
-rpm: \ 
+rpm: \
 	common-rpm \
 	consumers-rpm \
 	producers-rpm \
