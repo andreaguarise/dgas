@@ -28,8 +28,8 @@ AC_REVISION([$Revision: 1.1.2.5.4.31.2.1 $])
 #Environment.
 PLATFORM=`uname -i`
 WORKDIR=`pwd`
-DISTRO=`lsb_release -si | tr "[:upper:]" "[:lower:]"`
-MAJOR=`lsb_release -ri | cut -f 1 -d.`
+DISTRO=`lsb_release -is | tr "[:upper:]" "[:lower:]"`
+MAJOR=`lsb_release -rs | cut -f 1 -d.`
 DISTSTRING=`echo -n ${DISTRO}${MAJOR}`
 AC_SUBST(WORKDIR)
 AC_SUBST(PLATFORM)
