@@ -30,7 +30,7 @@ PLATFORM=`uname -i`
 WORKDIR=`pwd`
 DISTRO=`lsb_release -si | tr "[:upper:]" "[:lower:]"`
 MAJOR=`lsb_release -ri | cut -f 1 -d.`
-DISTSTRING="${DISTRO}${MAJOR}"
+DISTSTRING=`echo -n ${DISTRO}${MAJOR}`
 AC_SUBST(WORKDIR)
 AC_SUBST(PLATFORM)
 AC_SUBST(DISTSTRING)
