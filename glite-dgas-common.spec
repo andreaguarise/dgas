@@ -1,7 +1,7 @@
 Summary: Common set of utility libraries needed by all DGAS modules
 Name: glite-dgas-common
 Version: %{versionstring}
-Release: centos6
+Release: %{diststring}
 License: Apache Software License
 Group: System Environment/Libraries
 Packager: ETICS

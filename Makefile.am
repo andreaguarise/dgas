@@ -74,7 +74,7 @@ common-rpm: common-install-etics
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-common-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-common-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-common-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-common.spec rpmbuild/SPECS/
-	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-common-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-common.spec
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "diststring @DISTSTRING@" --define "sourcefile glite-dgas-common-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-common.spec
 	mv rpmbuild/RPMS/x86_64/*rpm ./
 	rm -rf tgz
 	rm -rf rpmbuild
