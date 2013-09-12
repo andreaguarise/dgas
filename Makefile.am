@@ -65,11 +65,11 @@ common-install: common-src-install common-interface-install
 common-install-etics: common-src-install
 
 common-rpm: common-install-etics
-	mkdir tgz
-	mkdir rpmbuild
-	mkdir rpmbuild/SPECS
-	mkdir rpmbuild/SOURCES
-	mkdir rpmbuild/BUILD
+	mkdir -p tgz
+	mkdir -p rpmbuild
+	mkdir -p rpmbuild/SPECS
+	mkdir -p rpmbuild/SOURCES
+	mkdir -p rpmbuild/BUILD
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-common-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-common-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-common-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-common.spec rpmbuild/SPECS/
@@ -112,11 +112,11 @@ hlr-clients-install-etics: \
  	hlr-clients-src-install
  	
 hlr-clients-rpm: hlr-clients-install-etics
-	mkdir tgz
-	mkdir rpmbuild
-	mkdir rpmbuild/SPECS
-	mkdir rpmbuild/SOURCES
-	mkdir rpmbuild/BUILD
+	mkdir -p tgz
+	mkdir -p rpmbuild
+	mkdir -p rpmbuild/SPECS
+	mkdir -p rpmbuild/SOURCES
+	mkdir -p rpmbuild/BUILD
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-clients.spec rpmbuild/SPECS/
@@ -155,11 +155,11 @@ sensors-install-etics: \
 	sensors-config-install
 	
 sensors-rpm: sensors-install-etics
-	mkdir tgz
-	mkdir rpmbuild
-	mkdir rpmbuild/SPECS
-	mkdir rpmbuild/SOURCES
-	mkdir rpmbuild/BUILD
+	mkdir -p tgz
+	mkdir -p rpmbuild
+	mkdir -p rpmbuild/SPECS
+	mkdir -p rpmbuild/SOURCES
+	mkdir -p rpmbuild/BUILD
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-sensors-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-sensors-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-sensors-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-sensors.spec rpmbuild/SPECS/
@@ -227,11 +227,11 @@ hlr-service-install-etics: \
 	hlr-service-config-install
 	
 hlr-service-rpm: hlr-service-install-etics
-	mkdir tgz
-	mkdir rpmbuild
-	mkdir rpmbuild/SPECS
-	mkdir rpmbuild/SOURCES
-	mkdir rpmbuild/BUILD
+	mkdir -p tgz
+	mkdir -p rpmbuild
+	mkdir -p rpmbuild/SPECS
+	mkdir -p rpmbuild/SOURCES
+	mkdir -p rpmbuild/BUILD
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-service-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-service-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-service-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-service.spec rpmbuild/SPECS/
@@ -273,11 +273,11 @@ producers-install-etics: \
 	producers-config-install
 	
 producers-rpm: producers-install-etics
-	mkdir tgz
-	mkdir rpmbuild
-	mkdir rpmbuild/SPECS
-	mkdir rpmbuild/SOURCES
-	mkdir rpmbuild/BUILD
+	mkdir -p tgz
+	mkdir -p rpmbuild
+	mkdir -p rpmbuild/SPECS
+	mkdir -p rpmbuild/SOURCES
+	mkdir -p rpmbuild/BUILD
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-sensors-producers.spec rpmbuild/SPECS/
@@ -321,11 +321,11 @@ consumers-install-etics: \
 	consumers-config-install
 	
 consumers-rpm: consumers-install-etics
-	mkdir tgz
-	mkdir rpmbuild
-	mkdir rpmbuild/SPECS
-	mkdir rpmbuild/SOURCES
-	mkdir rpmbuild/BUILD
+	mkdir -p tgz
+	mkdir -p rpmbuild
+	mkdir -p rpmbuild/SPECS
+	mkdir -p rpmbuild/SOURCES
+	mkdir -p rpmbuild/BUILD
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-service-consumers.spec rpmbuild/SPECS/
