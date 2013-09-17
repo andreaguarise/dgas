@@ -155,7 +155,7 @@ fi
 /etc/dgas/dgas_sumrecords2goc.conf.template
 /etc/dgas/dgas_hlr.sql
 /usr/sbin/dgas-hlr-translatedb
-/usr/sbin/dgas-sumrecords2goc.pl
+/usr/sbin/dgas-hlr-deldupl.rb
 /usr/sbin/dgas-sumrecords2gocSSMAggregate.pl
 /usr/sbin/dgas-hlr-delresource
 /usr/sbin/dgas-hlr-addadmin
