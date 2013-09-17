@@ -122,7 +122,7 @@ hlr-clients-rpm: hlr-clients-install-etics
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-clients-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-clients.spec rpmbuild/SPECS/
-	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-clients-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-clients.spec
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "diststring @DISTSTRING@" --define "sourcefile glite-dgas-hlr-clients-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-clients.spec
 	mv rpmbuild/RPMS/x86_64/*rpm ./
 	rm -rf tgz
 	rm -rf rpmbuild
@@ -166,7 +166,7 @@ sensors-rpm: sensors-install-etics
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-sensors-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-sensors-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-sensors-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-sensors.spec rpmbuild/SPECS/
-	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-sensors-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-sensors.spec
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "diststring @DISTSTRING@" --define "sourcefile glite-dgas-hlr-sensors-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-sensors.spec
 	mv rpmbuild/RPMS/x86_64/*rpm ./
 	rm -rf tgz
 	rm -rf rpmbuild
@@ -239,7 +239,7 @@ hlr-service-rpm: hlr-service-install-etics
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-service-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-service-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-service-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-service.spec rpmbuild/SPECS/
-	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-service-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-service.spec
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "diststring @DISTSTRING@" --define "sourcefile glite-dgas-hlr-service-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-service.spec
 	mv rpmbuild/RPMS/x86_64/*rpm ./
 	rm -rf tgz
 	rm -rf rpmbuild
@@ -286,7 +286,7 @@ producers-rpm: producers-install-etics
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-sensors-producers.spec rpmbuild/SPECS/
-	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-sensors-producers.spec
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "diststring @DISTSTRING@" --define "sourcefile glite-dgas-hlr-sensors-producers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-sensors-producers.spec
 	mv rpmbuild/RPMS/@PLATFORM@/*rpm ./
 	rm -rf tgz
 	rm -rf rpmbuild
@@ -335,7 +335,7 @@ consumers-rpm: consumers-install-etics
 	cd ${PWD}/etics-tmp; if test -n "`ls -A`"; then tar -czf ../tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz *; else tar -czf ../tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz --files-from /dev/null; fi; cd -
 	cp tgz/glite-dgas-hlr-service-consumers-@VERSION@.tar.gz rpmbuild/SOURCES/
 	cp glite-dgas-hlr-service-consumers.spec rpmbuild/SPECS/
-	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "sourcefile glite-dgas-hlr-service-consumers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-service-consumers.spec
+	rpmbuild -bb --define "_topdir ${PWD}/rpmbuild" --define "platformstring @PLATFORM@" --define "versionstring @VERSION@" --define "diststring @DISTSTRING@" --define "sourcefile glite-dgas-hlr-service-consumers-@VERSION@.tar.gz" ${PWD}/rpmbuild/SPECS/glite-dgas-hlr-service-consumers.spec
 	mv rpmbuild/RPMS/x86_64/*rpm ./
 	rm -rf tgz
 	rm -rf rpmbuild
