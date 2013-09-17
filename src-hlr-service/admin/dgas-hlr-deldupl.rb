@@ -85,8 +85,8 @@ begin
         deleteStmt3 = con.prepare("DELETE FROM jobTransSummary WHERE uniqueChecksum=? AND dgJobId LIKE '%/__' AND endDate >=? AND endDate <?")
         deleteStmt3.execute(row[0],lsString,leString) if row[0]
       end
-      sleep values['sleep'] if values['sleep']
     end
+    sleep values['sleep'].to_i if values['sleep']
   end
 
 
