@@ -49,7 +49,6 @@ bool debug = false;
 bool reset = false;
 bool mergeReset = false;
 bool needs_help = false;
-bool checkDuplicate = false;
 bool translationRules = false;
 bool is2ndLevelHlr = false;
 
@@ -68,7 +67,6 @@ int options ( int argc, char **argv )
 			{"debug",0,0,'D'},
 			{"reset",0,0,'r'},
 			{"mergeReset",0,0,'m'},
-			{"checkDuplicate",0,0,'c'},
 			{"useTranslationRules",0,0,'T'},
 			{"help",0,0,'h'},
 			{0,0,0,0}
@@ -81,7 +79,6 @@ int options ( int argc, char **argv )
 		case 'D': debug = true; break;
 		case 'r': reset =true;; break;
 		case 'm': mergeReset =true;; break;
-		case 'c': checkDuplicate =true;; break;
 		case 'T': translationRules = true;; break;
 		case 'h': needs_help =true;; break;
 		default : break;
@@ -100,7 +97,6 @@ int help (const char *progname)
 	cerr << setw(30) << left << "-D --debug"<<"Ask for debug output" << endl;
 	cerr << setw(30) << left << "-C --Conf"<<"HLR configuration file, if not the default: " << DGAS_DEF_CONF_FILE << endl;
 	cerr << setw(30) << left << "-r --reset"<<"Clean up the query tables and recreates them from raw database info." << endl;
-	cerr << setw(30) << left << "-c --checkDuplicate"<<"Search for duplicate entries and expunge the one with less information." << endl;
 	cerr << setw(30) << left << "-T --useTranslationRules"<<"Perform database translation rules defined in the rules.conf file" << endl;
 
 	cerr << setw(30) << left << "-h --help"<<"This help" << endl;
@@ -1069,50 +1065,7 @@ int execTranslationRules(string& rulesFile)
 	return 0;
 }
 
-int removeDuplicated ()
-{
-	string logBuff = "Checking for duplicate entries.";
-	hlr_log(logBuff,&logStream,6);
-	string queryString = "";
-	queryString = "SELECT uniqueChecksum,count(dgJobId) FROM jobTransSummary GROUP BY uniqueChecksum HAVING count(dgJobId) > 1";
-	if ( debug )
-	{
-		cerr << queryString << endl;
-	}
-	hlrGenericQuery getChecksums(queryString);
-	getChecksums.query();
-	vector<resultRow>::const_iterator it = (getChecksums.queryResult).begin();
-	while ( it != (getChecksums.queryResult).end() )
-	{
-		logBuff = "Found:"+(*it)[0]+ ",entries:"+ (*it)[1];
-		hlr_log(logBuff,&logStream,7);
-		string queryString = "SELECT dgJobId,accountingProcedure from jobTransSummary WHERE uniqueChecksum='";
-		queryString += (*it)[0] + "'";
-		if ( debug )
-		{
-			cerr << queryString << endl;
-		}
-		hlrGenericQuery getInfo(queryString);
-		getInfo.query();
-		vector<resultRow>::const_iterator it2 = (getInfo.queryResult).begin();
-		while ( it2 != (getInfo.queryResult).end() )
-		{
-			if ( debug )
-			{
-				cerr << (*it2)[0] << ":" << (*it2)[1] << endl;
-			}
-			it2++;
-		}
-		queryString = "DELETE from jobTransSummary WHERE uniqueChecksum='";
-		queryString += (*it)[0] + "' AND accountingProcedure='outOfBand'";
-		logBuff = "Removing:" + (*it)[0] + ",outOfBand.";
-		hlr_log(logBuff,&logStream,6);
-		hlrGenericQuery delOOB(queryString);
-		delOOB.query();
-		it++;
-	}
-	return 0;
-}
+
 
 void Exit (int exitStatus )
 {
@@ -1174,11 +1127,6 @@ void doOnSecondLevel(string acceptRecordsStartDate, string & rulesFile, database
 	table trans_in (DB, "trans_in");
 	if (trans_in.exists()) trans_in.drop();
 
-	//now add recordDate index on date field to records_*
-	//tables
-
-	if(checkDuplicate)
-		removeDuplicated();
 
 	if(translationRules)
 		execTranslationRules(rulesFile);
@@ -1461,7 +1409,6 @@ int main (int argc, char **argv)
 		//if this is a 2nd level HLR we can bail out here...
 	}
 	//otherwise we must go on...
-	if ( checkDuplicate ) removeDuplicated();
 	if ( translationRules ) execTranslationRules(rulesFile);
 	Exit(0);
 }
