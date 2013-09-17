@@ -2,10 +2,6 @@
 
 # DGAS Pushd.
 # A. Guarise (guarise@to.infn.it)
-# Condor parser based on information provided by
-# Ken Schumacher (kschu@fnal.gov)
-# and Philippe Canal (pcanal@fnal.gov), Fermilab, USA
-# Much of the code for &parse_line() (including the primary regexp) from Joerk Behrends.
 
 use strict;
 use POSIX;
@@ -41,9 +37,10 @@ my $configFilePath = "/etc/dgas/dgas_sensors.conf";
 my %configValues   = (
 	lockFileName      => "/var/lock/dgas/dgas-pushd.lock",
 	logFileName       => "/var/log/dgas/dgas_pushd.log",
-	mainPollInterval  => "5",
+	pushdMainPollInterval  => "5",
 	systemLogLevel    => 7,
 	maxThreadNumber   => "5",
+	cmdPerThread      => 3,
 	printAsciiLog     => "no",
 	asciiLogFilePath  => "/var/log/dgas/pushdAscii.log",
 	dgasDB            => "/var/spool/dgas/dgas.sqlite",
@@ -140,7 +137,7 @@ while ($keepGoing)
 	sleep 1;
 }
 
-my $limit = ( $configValues{maxThreadNumber} ) * 3;
+my $limit = ( $configValues{maxThreadNumber} ) * ( $configValues{cmdPerThread} );
 
 #my $counter =0;
 while ($keepGoing)
@@ -284,15 +281,16 @@ while ($keepGoing)
 			}
 		}
 	}
+	$dbh->commit;
 	for (
 		my $i = 0 ;
-		$keepGoing && ( $i < $configValues{mainPollInterval} ) ;
+		$keepGoing && ( $i < $configValues{pushdMainPollInterval} ) ;
 		$i++
 	  )
 	{
 		usleep(100000);
 	}
-	if ($configValues{mainPollInterval} == 0 ) {usleep(5000);}#sleep at least five milli-second 
+	if ($configValues{pushdPollInterval} == 0 ) {usleep(5000);}#sleep at least five milli-second 
 	my $elapsed = tv_interval( $t0, [gettimeofday] );
 	&printLog( 9, "ELAPSED:$elapsed" );
 	my $success_min;
@@ -448,6 +446,10 @@ sub parseConf
 		{
 			$configValues{maxThreadNumber} = $1;
 		}
+                if (/^cmdPerThread\s*=\s*\"(.*)\"$/)
+                {
+                        $configValues{cmdPerThread} = $1;
+                }
 		if (/^printAsciiLog\s*=\s*\"(.*)\"$/) {
 			$configValues{printAsciiLog} = $1;
 		}
@@ -455,9 +457,9 @@ sub parseConf
 		{
 			$configValues{asciiLogFilePath} = $1;
 		}
-		if (/^mainPollInterval\s*=\s*\"(.*)\"$/)
+		if (/^pushdMainPollInterval\s*=\s*\"(.*)\"$/)
 		{
-			$configValues{mainPollInterval} = $1;
+			$configValues{pushdMainPollInterval} = $1;
 		}
 		if (/^commandTimeout\s*=\s*\"(.*)\"$/)
 		{
@@ -536,9 +538,9 @@ sub execCommand
 	{
 		$status = $? >> 8;
 	}
-	&printLog( 7,
+	&printLog( 9,
 		"Executing:$protocol, key=$key :$command EXIT_STATUS=$status" );
-	&printLog( 5, "Executing:$protocol, key=$key, EXIT_STATUS=$status" );
+	&printLog( 7, "Executing:$protocol, key=$key, EXIT_STATUS=$status" );
 	if ( $printAsciiLog == 1 )
 	{
 		print ASCIILOG "$command;$protocol;#STATUS=$status\n";
@@ -551,7 +553,7 @@ sub delCommand
 {
 	my $key    = $_[0];
 	my $status = 0;
-	&printLog( 8, "Deleting:$key" );
+	&printLog( 7, "Deleting:$key" );
 	my $delString = "DELETE FROM commands WHERE key=$key";
 	&printLog( 9, "DELETE FROM commands WHERE key=$key" );
 	my $querySuccesfull = 1;
@@ -654,3 +656,4 @@ sub error
 	}
 	exit(1);
 }
+
