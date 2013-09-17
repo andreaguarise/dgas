@@ -1,7 +1,7 @@
 Summary: The module containing the server backend for te Distributed Grid Accounting System
 Name: glite-dgas-hlr-service
 Version: %{versionstring}
-Release: centos6
+Release: %{diststring}
 License: Apache Software License
 Group: System Environment/Libraries
 Packager: ETICS

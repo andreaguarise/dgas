@@ -1,7 +1,7 @@
 Summary: Emi.dgas.hlr-service-consumers
 Name: glite-dgas-hlr-service-consumers
 Version: %{versionstring}
-Release: centos6
+Release: %{diststring}
 License: Apache Software License
 Group: System Environment/Libraries
 Packager: ETICS

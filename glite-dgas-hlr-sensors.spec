@@ -1,7 +1,7 @@
 Summary: Emi.dgas.hlr-sensors
 Name: glite-dgas-hlr-sensors
 Version: %{versionstring}
-Release: centos6
+Release: %{diststring}
 License: Apache Software License
 Group: System Environment/Libraries
 Packager: ETICS
