@@ -113,6 +113,12 @@ collectorBufferFileName = "/var/spool/dgas/dgasCollectorBuffer"
 # seconds to wait before looking for new jobs in UR Box.
 mainPollInterval = "60"
 
+# pushd parameter to tune resource consumption
+pushdMainPollInterval = "5"
+
+# pushd command executed per thread
+cmdPerThread = "3"
+
 # Additional parameter to tune resource consumption on idle cycle.
 collectorPollInterval = "10"
 
