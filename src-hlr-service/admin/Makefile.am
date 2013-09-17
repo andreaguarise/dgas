@@ -15,7 +15,8 @@ sbin_SCRIPTS = \
 	dgas-hlr-dbcreate \
 	dgas-hlr-bdiiresimport.pl \
 	dgas-sumrecords2goc.pl \
-	dgas-sumrecords2gocSSMAggregate.pl
+	dgas-sumrecords2gocSSMAggregate.pl \
+	dgas-hlr-deldupl.rb
 
 libexec_SCRIPTS = \
 	dgas-hlr-checkHostCertProxy.sh 
