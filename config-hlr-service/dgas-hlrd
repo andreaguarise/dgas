@@ -302,7 +302,7 @@ stopMain()
 
 status()
 {
-        RETVAL=0
+    RETVAL=0
 
 	echo $HLRD_LOCK
 	PID0=`cat $HLRD_LOCK 2> /dev/null`
@@ -317,6 +317,23 @@ status()
 		then
 			echo "Found pending lock file, removing it."
 			rm -f $HLRD_LOCK
+		fi
+		RETVAL=1
+	fi
+	
+	echo $HLRD_NOGSI_LOCK
+	PID1=`cat $HLRD_NOGSI_LOCK 2> /dev/null`
+	echo "Process $prog: $PID0"
+	[ -e $HLRD_LOCK ] && ps auxw | grep $PID1 | grep dgas 2> /dev/null
+	if [ "$?" -eq 0 ] 
+	then
+		echo "The process is running."
+	else
+		echo "The process is not running."
+		if [ -e $HLRD_NOGSI_LOCK ]
+		then
+			echo "Found pending lock file, removing it."
+			rm -f $HLRD_NOGSI_LOCK
 		fi
 		RETVAL=1
 	fi
