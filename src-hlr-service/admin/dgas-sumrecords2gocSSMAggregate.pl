@@ -112,7 +112,7 @@ else
 	my $queryString = "SELECT siteName,
 		year(CONVERT_TZ(endDate,'$workparameters{senderTimeZone}','$workparameters{receiverTimeZone}')) AS year_tz,
 		month(CONVERT_TZ(endDate,'$workparameters{senderTimeZone}','$workparameters{receiverTimeZone}')) AS month_tz,
-		userVo,userFqan,
+		userVo,substring_index(userFqan,';',1) as primFqan,
 		gridUser,
 		count(*),
 		UNIX_TIMESTAMP(min(CONVERT_TZ(endDate,'$workparameters{senderTimeZone}','$workparameters{receiverTimeZone}'))),
@@ -128,7 +128,7 @@ else
 			#process only grid jobs (voOrigin=[fqan,pool])
 			$queryString .= "AND ( voOrigin=\"fqan\" OR voOrigin=\"pool\" ) ";
 		}
-		$queryString .= "GROUP BY siteName,year_tz,month_tz,userVo,userFqan,gridUser";
+		$queryString .= "GROUP BY siteName,year_tz,month_tz,userVo,primFqan,gridUser";
 	
 	my $dsn = "dbi:mysql:$workparameters{hlrDbName}:$workparameters{hlrDbServer}:$workparameters{hlrDbPort}";
 	&printLog(7, "Database: $dsn" );
@@ -164,9 +164,19 @@ else
 	    my @fqanList = split(';',$userFqan);
 	    if ( @fqanList )
 	    {
-	    my $primaryFqan = $fqanList[0];
+		    #FIX this, no more needed since already in the query 
+	            my $primaryFqan = $fqanList[0];
 		    ($VOGroup,$VORole) = ($primaryFqan =~ /^(.*)\/Role=(.*)\/(.*)$/);
-	    }
+	    		$VORole = "Role=$VORole";
+            }
+            else 
+            {
+		    $VORole = "Role=NULL";
+                    $VOGroup = "/$userVo";
+                    #&printLog(5, "Skipping record with missing VO:$userVo cpu: $cpuDuration, wall: $wallDuration" );
+                    &printLog(5, "Record with missing FQAN, setting Group and Role VO:$userVo cpu: $cpuDuration, wall: $wallDuration" );
+                    #next;
+            }	
 	    my ($vofound, $voItem, $sitefound, $siteItem);
 	    foreach $voItem (@voList)
 	    {
@@ -192,7 +202,7 @@ else
 	    }
 	    if ( $sitefound )
 	    {
-	    	&printLog(7, "Record: $siteName: $year $month $userVo" );
+	    	&printLog(7, "Record: $siteName: $year $month $userVo, cpu: $cpuDuration, wall: $wallDuration, count: $numRecords" );
 	    }
 	    else
 	    {
@@ -207,7 +217,7 @@ else
         $apelMessage .= "Site: $siteName\n";
         $apelMessage .= "Month: $month\n";
         $apelMessage .= "Year: $year\n";
-        $apelMessage .= "GlobalUserName: $gridUser\n";
+        if ($gridUser ne "" ){ $apelMessage .= "GlobalUserName: $gridUser\n";}
         $apelMessage .= "Group: $userVo\n";
         $apelMessage .= "VOGroup: $VOGroup\n";
         $apelMessage .= "VORole: $VORole\n";
